@@ -9,37 +9,66 @@ import java.net.Socket;
 
 public class ServerOne {
 
-	
 	/*
-	 * Connect to server as soon as the 
+	 * Connect to server as soon as the
 	 */
-	
-	
-	public static void main(String[] args) throws IOException {
-		final int portNumber = 81;
-		System.out.println("Creating server socket on port " + portNumber);
-		ServerSocket serverSocket = new ServerSocket(portNumber);
-		String host = "otherServer";
+	private static final double LOSS_RATE = 0.25;
+	private static final int AVERAGE_DELAY = 150; // milliseconds
+
+	public static void main(String[] args) throws Exception {
+		// Initialize common variables
+		long delay = 0;
+		int portNumber = 12281;
+		String message = "";
+		
+		
+
+		if (args.length > 3) {
+			System.out.println("ERR - too many arguments");
+			System.exit(1);
+		}
+		if (args[0].matches("\\d+")) {
+			portNumber = Integer.parseInt(args[0]);
+
+		} else {
+			System.out.println("ERR - arg 1");
+			System.exit(1);
+		}
+
+
 		while (true) {
-			Socket clientSocket = serverSocket.accept();
-			Socket socketToServer = new Socket(host, portNumber);
-			
-			BufferedReader brFromServer = new BufferedReader(new InputStreamReader(socketToServer.getInputStream()));
-			
-			DataOutputStream os = new DataOutputStream(clientSocket.getOutputStream());
-			
-			PrintWriter pw = new PrintWriter(os, true);
-			pw.println("What's you name?");
+			try (ServerSocket welcomeSocket = new ServerSocket(portNumber);
+					Socket connectionSocket = welcomeSocket.accept();
+					DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+					BufferedReader inFromClient = new BufferedReader(
+							new InputStreamReader(connectionSocket.getInputStream()));) {
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			String str = br.readLine();
+				while (true) {
 
-			pw.println("Hello, " + str);
-			pw.close();
-			clientSocket.close();
+					message = inFromClient.readLine();
+					if (message == null) {
+						break;
+					}
+//								if (random.nextDouble() < LOSS_RATE)
+//								{
+					outToClient.writeBoolean(false);
 
-			System.out.println("Just said hello to:" + str);
+					System.out.println(message + "  ACTION: not sent");
+
+//								}
+//								else
+//								{
+					// delay = (int) (random.nextDouble() * 2* AVERAGE_DELAY);
+					Thread.sleep(delay);
+					outToClient.writeBoolean(true);
+
+					System.out.println(message + "  ACTION: delayed: " + delay + " ms");
+//								}
+
+				}
+			} catch (Exception e) {
+				throw new Exception();
+			}
 		}
 	}
-
 }
