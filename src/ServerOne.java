@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ServerOne {
 
@@ -47,9 +48,8 @@ public class ServerOne {
 						outToClientOne.writeChars(serverTwoMessage+"\n");
 						
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new Exception();
+				} catch (SocketException e) {
+					
 				}
 			}
 		}

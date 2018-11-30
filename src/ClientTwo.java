@@ -15,6 +15,8 @@ import javax.swing.plaf.ButtonUI;
 public class ClientTwo {
 	private static JFrame frame;
 	private static boolean flag;
+	private static boolean myTurn;
+	private static boolean endGame = false;
 	@SuppressWarnings("resource")
 	public static void main(String[] argv) throws IOException {
 
@@ -40,12 +42,19 @@ public class ClientTwo {
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		gamePanel(outToServer); // launch game
 		while (true) {
+			if (endGame) {
+				clientSocket.close();
+				outToServer.close();
+				inFromServer.close();
+				System.exit(0);
+			}
 			System.out.println("Waiting for server message");
 			serverMessage = inFromServer.readLine();
 
 			System.out.println("Received server message - " + serverMessage);
 			flag = true;
 			buttons[Integer.parseInt(serverMessage.trim())].doClick();
+			myTurn = true;
 		}
 
 	}
@@ -99,6 +108,9 @@ public class ClientTwo {
 		}
 
 		public void actionPerformed(ActionEvent e) { // placing x or o's
+			if (!myTurn && !flag) {
+				return;
+			}
 			String output = "" + buttonNum;
 			if ((xOrO % 2) == 0 && getText().equals(" ") && win == false) {
 				letter = "X";
@@ -123,6 +135,7 @@ public class ClientTwo {
 				try {
 					System.out.println("Attempting to write to server one");
 					outToServer.writeChars(output + "\n");
+					myTurn = false;
 					System.out.println("Wrote to server two - " + output);
 
 //				for (Component i: frame.getContentPane().getComponents()) {
@@ -136,22 +149,30 @@ public class ClientTwo {
 			}
 			flag = false;
 			if (win == true) { // if the game ends let the user know who wins and give option to play again
-				again = JOptionPane.showConfirmDialog(null, letter + " wins the game!  Do you want to play again?",
-						letter + "won!", JOptionPane.YES_NO_OPTION);
+				String winner = "";
+				if (letter.trim().equalsIgnoreCase("O")) {
+					winner = "User 2";
+				}
+				else {
+					winner = "User 1";
+				}
+				again = JOptionPane.showConfirmDialog(null, winner + " wins the game!  Click 'ok' to close",
+						letter + "won!", JOptionPane.OK_OPTION);
+				endGame = true;
 
 			} else if (xOrO == 9 && win == false) {// tie game, announce and ask if the user want to play again
-				again = JOptionPane.showConfirmDialog(null, "The game was tie!  Do you want to play again?",
-						"Tie game!", JOptionPane.YES_NO_OPTION);
-				win = true;
+				again = JOptionPane.showConfirmDialog(null, "The game was tie! Click 'ok' to close",
+						"Tie game!", JOptionPane.OK_OPTION);
+				endGame = true;
 			}
 
-			if (again == JOptionPane.YES_OPTION && win == true) { // if the user want to play again clear all the button
-																	// and start over
-				clearButtons();
-				win = false;
-			} else if (again == JOptionPane.NO_OPTION) {
-				System.exit(0); // exit game if the user do not want to play again
-			}
+//			if (again == JOptionPane.YES_OPTION && win == true) { // if the user want to play again clear all the button
+//																	// and start over
+//				clearButtons();
+//				win = false;
+//			} else if (again == JOptionPane.NO_OPTION) {
+//				System.exit(0); // exit game if the user do not want to play again
+//			}
 
 		}
 

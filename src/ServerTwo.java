@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ServerTwo {
 
@@ -50,8 +51,7 @@ public class ServerTwo {
 
 				}
 			}
-		} catch (Exception e) {
-			throw new Exception();
+		} catch (SocketException e) {
 		}
 	}
 }
