@@ -120,7 +120,9 @@ public class ClientOne {
 			}
 
 			try {
+				System.out.println("Attempting to write to server two");
 				outToServer.writeChars(output);
+				System.out.println("Wrote to server two - " + output);
 //				for (Component i: frame.getContentPane().getComponents()) {
 //					MyButton j = (MyButton) i;
 //					j.setEnabled(false);
