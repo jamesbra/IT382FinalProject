@@ -48,8 +48,10 @@ public class ServerOne {
 						outToClientOne.writeChars(serverTwoMessage+"\n");
 						
 					}
-				} catch (SocketException e) {
+				} catch (Exception e) {
+					outToServerTwo.writeInt(-1);
 					outToServerTwo.flush();
+					continue;
 				}
 			}
 		}

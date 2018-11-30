@@ -28,7 +28,6 @@ public class ServerTwo {
 				BufferedReader inFromServerOne = new BufferedReader(
 						new InputStreamReader(serverOneConnectionSocket.getInputStream()));) {
 			while (true) {
-				System.out.println("Received client two connection");
 				try (Socket clientTwoConnectionSocket = serverTwoSocket.accept();
 						DataOutputStream outToClientTwo = new DataOutputStream(
 								clientTwoConnectionSocket.getOutputStream());
@@ -50,8 +49,10 @@ public class ServerTwo {
 					}
 
 				}
-				catch (SocketException e) {
+				catch (Exception e) {
+					outToServerOne.writeInt(-1);
 					outToServerOne.flush();
+					continue;
 				}
 			}
 		} catch (Exception e) {
