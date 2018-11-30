@@ -39,7 +39,9 @@ public class ClientTwo {
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		gamePanel(outToServer); // launch game
 		while (true) {
+			System.out.println("Waiting for server message");
 			serverMessage = inFromServer.readLine();
+			System.out.println("Received server message - " + serverMessage);
 			buttons[Integer.parseInt(serverMessage)].doClick();
 		}
 
