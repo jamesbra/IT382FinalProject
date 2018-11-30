@@ -22,7 +22,7 @@ public class ServerOne {
 		String serverMessage = "";
 		String clientMessage = "";
 		String host = "oak.ad.ilstu.edu";
-		try (Socket serverTwoConnectionSocket = new Socket(host, portNumber);
+		try (Socket serverTwoConnectionSocket = new Socket(host, 12282);
 				DataOutputStream outToServerTwo = new DataOutputStream(serverTwoConnectionSocket.getOutputStream());
 				BufferedReader inFromServerTwo = new BufferedReader(
 						new InputStreamReader(serverTwoConnectionSocket.getInputStream()));) {
