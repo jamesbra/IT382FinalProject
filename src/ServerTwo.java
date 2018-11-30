@@ -32,6 +32,7 @@ public class ServerTwo {
 
 				while (true) {
 					Socket clientTwoConnectionSocket = serverTwoSocket.accept();
+					System.out.println("Received client two connection");
 					DataOutputStream outToClientTwo = new DataOutputStream(serverOneConnectionSocket.getOutputStream());
 					BufferedReader inFromClientTwo = new BufferedReader(
 							new InputStreamReader(serverOneConnectionSocket.getInputStream()));
