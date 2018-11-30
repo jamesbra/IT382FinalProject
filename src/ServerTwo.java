@@ -23,19 +23,19 @@ public class ServerTwo {
 		String serverOneMessage = "";
 
 		while (true) {
-			try (ServerSocket welcomeSocket = new ServerSocket(portNumber);
-					Socket serverOneConnectionSocket = welcomeSocket.accept();
+			try (ServerSocket serverTwoSocket = new ServerSocket(portNumber);
+					Socket serverOneConnectionSocket = serverTwoSocket.accept();
 					DataOutputStream outToServerOne = new DataOutputStream(serverOneConnectionSocket.getOutputStream());
 					BufferedReader inFromServerOne = new BufferedReader(
 							new InputStreamReader(serverOneConnectionSocket.getInputStream()));)
 			{
 
 				while (true) {
-					Socket clientTwoConnectionSocket = welcomeSocket.accept();
-					DataOutputStream outToClient = new DataOutputStream(serverOneConnectionSocket.getOutputStream());
-					BufferedReader inFromClient = new BufferedReader(
+					Socket clientTwoConnectionSocket = serverTwoSocket.accept();
+					DataOutputStream outToClientTwo = new DataOutputStream(serverOneConnectionSocket.getOutputStream());
+					BufferedReader inFromClientTwo = new BufferedReader(
 							new InputStreamReader(serverOneConnectionSocket.getInputStream()));
-					clientMessage = inFromClient.readLine();
+					clientMessage = inFromClientTwo.readLine();
 					System.out.println(clientMessage);
 					// message = inFromClient.readLine();
 //					if (message == null) {

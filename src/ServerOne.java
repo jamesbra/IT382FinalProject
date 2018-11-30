@@ -19,56 +19,32 @@ public class ServerOne {
 		// Initialize common variables
 		long delay = 0;
 		int portNumber = 12281;
-		String message = "";
+		String serverMessage = "";
+		String clientMessage = "";
 		String host = "oak.ad.ilstu.edu";
-		Socket socketForServerTwo = new Socket(host, portNumber);
-		
+		try (Socket serverTwoConnectionSocket = new Socket(host, portNumber);
+				DataOutputStream outToServerTwo = new DataOutputStream(serverTwoConnectionSocket.getOutputStream());
+				BufferedReader inFromServerTwo = new BufferedReader(
+						new InputStreamReader(serverTwoConnectionSocket.getInputStream()));) {
+			System.out.println("Connected to server two");
+			while (true) {
+				System.out.println("Waiting for client connection");
+				try (ServerSocket serverOneSocket = new ServerSocket(portNumber);
+						Socket connectionSocket = serverOneSocket.accept();
+						DataOutputStream outToClientOne = new DataOutputStream(connectionSocket.getOutputStream());
+						BufferedReader inFromClientOne = new BufferedReader(
+								new InputStreamReader(connectionSocket.getInputStream()));) {
 
-		if (args.length > 3) {
-			System.out.println("ERR - too many arguments");
-			System.exit(1);
-		}
-		if (args[0].matches("\\d+")) {
-			portNumber = Integer.parseInt(args[0]);
+					while (true) {
 
-		} else {
-			System.out.println("ERR - arg 1");
-			System.exit(1);
-		}
+						clientMessage = inFromClientOne.readLine();
 
+						outToClientOne.writeBoolean(true);
 
-		while (true) {
-			try (ServerSocket welcomeSocket = new ServerSocket(portNumber);
-					Socket connectionSocket = welcomeSocket.accept();
-					DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-					BufferedReader inFromClient = new BufferedReader(
-							new InputStreamReader(connectionSocket.getInputStream()));) {
-
-				while (true) {
-
-					message = inFromClient.readLine();
-					if (message == null) {
-						break;
 					}
-//								if (random.nextDouble() < LOSS_RATE)
-//								{
-					outToClient.writeBoolean(false);
-
-					System.out.println(message + "  ACTION: not sent");
-
-//								}
-//								else
-//								{
-					// delay = (int) (random.nextDouble() * 2* AVERAGE_DELAY);
-					Thread.sleep(delay);
-					outToClient.writeBoolean(true);
-
-					System.out.println(message + "  ACTION: delayed: " + delay + " ms");
-//								}
-
+				} catch (Exception e) {
+					throw new Exception();
 				}
-			} catch (Exception e) {
-				throw new Exception();
 			}
 		}
 	}
