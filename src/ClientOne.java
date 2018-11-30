@@ -14,30 +14,22 @@ import javax.swing.*;
 //import ClientOne.MyButton;
 
 public class ClientOne {
-	
+
 	private static JFrame frame;
-	
 	public static void main(String[] args) throws IOException {
 		String hostName = "oak.ad.ilstu.edu";
 		int portNumber = 12281;
 
 		String serverMessage;
-		
 
 		Socket clientSocket = null;
-		try {
-			// Initialize socket - checking hostname
-			clientSocket = new Socket(hostName, portNumber);
-		} catch (UnknownHostException e) {
-			System.out.println("ERR - arg 1");
-			System.exit(1);
-		} catch (ConnectException e) {
-			System.out.println("ERR - arg 2");
-			System.exit(1);
-		}
+		clientSocket = new Socket(hostName, portNumber);
 		// Create output/input streams
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		//outToServer.writeInt(0);
+		
+//		outToServer.close();
 		gamePanel(outToServer); // launch game
 		while (true) {
 			serverMessage = inFromServer.readLine();
@@ -62,13 +54,10 @@ public class ClientOne {
 		panel.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
 		panel.setBackground(Color.white);
 
-
 		for (int i = 0; i <= 8; i++) { // placing the button onto the board
 			buttons[i] = new MyButton(i, outToServer);
 			panel.add(buttons[i]);
 		}
-
-	
 
 		frame.getContentPane().add(panel);
 		frame.pack();
@@ -121,7 +110,7 @@ public class ClientOne {
 
 			try {
 				System.out.println("Attempting to write to server two");
-				outToServer.writeChars(output);
+				outToServer.writeChars(output+"\n");
 				System.out.println("Wrote to server two - " + output);
 //				for (Component i: frame.getContentPane().getComponents()) {
 //					MyButton j = (MyButton) i;

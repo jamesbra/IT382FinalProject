@@ -39,12 +39,12 @@ public class ServerOne {
 						System.out.println("Waiting for client one response");
 						clientOneMessage = inFromClientOne.readLine();
 						System.out.println("Received response - " + clientOneMessage);
-						outToServerTwo.writeChars(clientOneMessage);
+						outToServerTwo.writeChars(clientOneMessage+"\n");
 						System.out.println("Wrote to server two");
 						System.out.println("Waiting for server two response");
 						serverTwoMessage = inFromServerTwo.readLine();
 						System.out.println("Received response from server - " + serverTwoMessage);
-						outToClientOne.writeChars(serverTwoMessage);
+						outToClientOne.writeChars(serverTwoMessage+"\n");
 						
 					}
 				} catch (Exception e) {

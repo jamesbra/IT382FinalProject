@@ -120,7 +120,7 @@ public class ClientTwo {
 
 			try {
 				System.out.println("Attempting to write to server one");
-				outToServer.writeChars(output);
+				outToServer.writeChars(output+"\n");
 				System.out.println("Wrote to server two - " + output);
 				
 //				for (Component i: frame.getContentPane().getComponents()) {
