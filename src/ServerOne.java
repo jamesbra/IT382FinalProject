@@ -22,7 +22,7 @@ public class ServerOne {
 		int portNumber = 12281;
 		String serverTwoMessage = "";
 		String clientOneMessage = "";
-		String host = "oak.ad.ilstu.edu";
+		String host = "pine.ad.ilstu.edu";
 		
 		try (ServerSocket serverOneSocket = new ServerSocket(portNumber);
 				Socket serverTwoConnectionSocket = new Socket(host, 12282);
