@@ -22,18 +22,6 @@ public class ServerTwo {
 		String clientMessage = "";
 		String serverOneMessage = "";
 
-		if (args.length > 3) {
-			System.out.println("ERR - too many arguments");
-			System.exit(1);
-		}
-		if (args[0].matches("\\d+")) {
-			portNumber = Integer.parseInt(args[0]);
-
-		} else {
-			System.out.println("ERR - arg 1");
-			System.exit(1);
-		}
-
 		while (true) {
 			try (ServerSocket welcomeSocket = new ServerSocket(portNumber);
 					Socket serverOneConnectionSocket = welcomeSocket.accept();
