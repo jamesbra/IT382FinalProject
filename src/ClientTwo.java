@@ -30,9 +30,9 @@ public class ClientTwo {
 		// Create output/input streams
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		
+		System.out.println("Trying to write to server");
 		outToServer.writeChars("Fuck");
-		
+		System.out.println("Wrote to server");
 		
 		
 		
