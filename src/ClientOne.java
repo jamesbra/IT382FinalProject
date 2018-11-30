@@ -16,6 +16,8 @@ import javax.swing.*;
 public class ClientOne {
 
 	private static JFrame frame;
+	private static boolean flag;
+
 	public static void main(String[] args) throws IOException {
 		String hostName = "oak.ad.ilstu.edu";
 		int portNumber = 12281;
@@ -27,13 +29,14 @@ public class ClientOne {
 		// Create output/input streams
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		//outToServer.writeInt(0);
-		
+		// outToServer.writeInt(0);
+
 //		outToServer.close();
 		gamePanel(outToServer); // launch game
 		while (true) {
 			serverMessage = inFromServer.readLine();
-			buttons[Integer.parseInt(serverMessage)].doClick();
+			flag = true;
+			buttons[Integer.parseInt(serverMessage.trim())].doClick();
 		}
 
 	}
@@ -46,7 +49,7 @@ public class ClientOne {
 	private static JButton buttons[] = new JButton[9]; // create 9 buttons
 
 	private static void gamePanel(DataOutputStream outToServer) {
-		frame = new JFrame("Tic Tac Toe");
+		frame = new JFrame("Tic Tac Toe - User 1");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel(); // creating a panel with a box like a tic tac toe board
@@ -107,19 +110,21 @@ public class ClientOne {
 					win = true;
 				}
 			}
-
-			try {
-				System.out.println("Attempting to write to server two");
-				outToServer.writeChars(output+"\n");
-				System.out.println("Wrote to server two - " + output);
+			if (!flag) {
+				try {
+					System.out.println("Attempting to write to server two");
+					outToServer.writeChars(output + "\n");
+					System.out.println("Wrote to server two - " + output);
 //				for (Component i: frame.getContentPane().getComponents()) {
 //					MyButton j = (MyButton) i;
 //					j.setEnabled(false);
 //				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
+			flag = false;
 			if (win == true) { // if the game ends let the user know who wins and give option to play again
 				again = JOptionPane.showConfirmDialog(null, letter + " wins the game!  Do you want to play again?",
 						letter + "won!", JOptionPane.YES_NO_OPTION);

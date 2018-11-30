@@ -14,6 +14,7 @@ import javax.swing.plaf.ButtonUI;
 
 public class ClientTwo {
 	private static JFrame frame;
+	private static boolean flag;
 	@SuppressWarnings("resource")
 	public static void main(String[] argv) throws IOException {
 
@@ -41,8 +42,10 @@ public class ClientTwo {
 		while (true) {
 			System.out.println("Waiting for server message");
 			serverMessage = inFromServer.readLine();
+
 			System.out.println("Received server message - " + serverMessage);
-			buttons[Integer.parseInt(serverMessage)].doClick();
+			flag = true;
+			buttons[Integer.parseInt(serverMessage.trim())].doClick();
 		}
 
 	}
@@ -55,7 +58,7 @@ public class ClientTwo {
 	private static JButton buttons[] = new JButton[9]; // create 9 buttons
 
 	private static void gamePanel(DataOutputStream outToServer) {
-		frame = new JFrame("Tic Tac Toe");
+		frame = new JFrame("Tic Tac Toe - User 2");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel(); // creating a panel with a box like a tic tac toe board
@@ -63,13 +66,10 @@ public class ClientTwo {
 		panel.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
 		panel.setBackground(Color.white);
 
-
 		for (int i = 0; i <= 8; i++) { // placing the button onto the board
 			buttons[i] = new MyButton(i, outToServer);
 			panel.add(buttons[i]);
 		}
-
-	
 
 		frame.getContentPane().add(panel);
 		frame.pack();
@@ -119,20 +119,22 @@ public class ClientTwo {
 					win = true;
 				}
 			}
+			if (!flag) {
+				try {
+					System.out.println("Attempting to write to server one");
+					outToServer.writeChars(output + "\n");
+					System.out.println("Wrote to server two - " + output);
 
-			try {
-				System.out.println("Attempting to write to server one");
-				outToServer.writeChars(output+"\n");
-				System.out.println("Wrote to server two - " + output);
-				
 //				for (Component i: frame.getContentPane().getComponents()) {
 //					MyButton j = (MyButton) i;
 //					j.setEnabled(false);
 //				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
+			flag = false;
 			if (win == true) { // if the game ends let the user know who wins and give option to play again
 				again = JOptionPane.showConfirmDialog(null, letter + " wins the game!  Do you want to play again?",
 						letter + "won!", JOptionPane.YES_NO_OPTION);
