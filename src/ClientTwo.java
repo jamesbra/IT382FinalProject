@@ -13,7 +13,7 @@ public class ClientTwo {
 	public static void main(String[] argv) throws IOException {
 		// Initialize common variables
 		String hostName = "oak.ad.ilstu.edu";
-		int portNumber = 12281;
+		int portNumber = 12282;
 
 
 		Socket clientSocket = null;
