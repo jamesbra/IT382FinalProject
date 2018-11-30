@@ -21,10 +21,9 @@ public class ClientTwo {
 	public static void main(String[] argv) throws IOException {
 
 		// Initialize common variables
-		String hostName = "oak.ad.ilstu.edu";
+		String hostName = "pine.ad.ilstu.edu";
 		int portNumber = 12282;
 		String serverMessage = "";
-		String[] serverInstructions;
 
 		Socket clientSocket = null;
 		try {
@@ -58,6 +57,9 @@ public class ClientTwo {
 
 	}
 
+	/**
+	 * @author University of Washington CS161 Course
+	 */
 	private static int[][] winCombinations = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, // horizontal wins
 			{ 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, // vertical wins
 			{ 0, 4, 8 }, { 2, 4, 6 } // diagonal wins
@@ -137,12 +139,7 @@ public class ClientTwo {
 					myTurn = false;
 					System.out.println("Wrote to server two - " + output);
 
-//				for (Component i: frame.getContentPane().getComponents()) {
-//					MyButton j = (MyButton) i;
-//					j.setEnabled(false);
-//				}
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -164,14 +161,6 @@ public class ClientTwo {
 				endGame = true;
 				System.exit(0);
 			}
-
-//			if (again == JOptionPane.YES_OPTION && win == true) { // if the user want to play again clear all the button
-//																	// and start over
-//				clearButtons();
-//				win = false;
-//			} else if (again == JOptionPane.NO_OPTION) {
-//				System.exit(0); // exit game if the user do not want to play again
-//			}
 
 		}
 

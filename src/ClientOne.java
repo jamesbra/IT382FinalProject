@@ -32,9 +32,7 @@ public class ClientOne {
 		// Create output/input streams
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		// outToServer.writeInt(0);
 
-//		outToServer.close();
 		gamePanel(outToServer); // launch game
 		while (true) {
 			if (endGame) {
@@ -52,6 +50,9 @@ public class ClientOne {
 
 	}
 
+	/**
+	 * @author University of Washington CS161 Course
+	 */
 	private static int[][] winCombinations = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, // horizontal wins
 			{ 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, // vertical wins
 			{ 0, 4, 8 }, { 2, 4, 6 } // diagonal wins
@@ -130,12 +131,7 @@ public class ClientOne {
 					outToServer.writeChars(output + "\n");
 					myTurn = false;
 					System.out.println("Wrote to server two - " + output);
-//				for (Component i: frame.getContentPane().getComponents()) {
-//					MyButton j = (MyButton) i;
-//					j.setEnabled(false);
-//				}
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -158,14 +154,6 @@ public class ClientOne {
 				endGame =true;
 				System.exit(0);
 			}
-
-//			if (again == JOptionPane.YES_OPTION && win == true) { // if the user want to play again clear all the button
-//																	// and start over
-//				clearButtons();
-//				win = false;
-//			} else if (again == JOptionPane.NO_OPTION) {
-//				System.exit(0); // exit game if the user do not want to play again
-//			}
 
 		}
 
