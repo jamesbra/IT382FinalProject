@@ -53,5 +53,8 @@ public class ServerOne {
 				}
 			}
 		}
+		catch (Exception e) {
+			
+		}
 	}
 }

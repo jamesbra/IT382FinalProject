@@ -50,8 +50,11 @@ public class ServerTwo {
 					}
 
 				}
+				catch (SocketException e) {
+					
+				}
 			}
-		} catch (SocketException e) {
+		} catch (Exception e) {
 		}
 	}
 }

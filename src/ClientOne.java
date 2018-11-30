@@ -148,13 +148,12 @@ public class ClientOne {
 				else {
 					winner = "User 1";
 				}
-				again = JOptionPane.showConfirmDialog(null, winner + " wins the game!  Click 'ok' to close",
-						letter + "won!", JOptionPane.YES_NO_OPTION);
+				JOptionPane.showMessageDialog(frame, winner + " wins the game!  Click 'ok' to close", "We have a winner!", JOptionPane.PLAIN_MESSAGE);
 				endGame = true;
 
+
 			} else if (xOrO == 9 && win == false) {// tie game, announce and ask if the user want to play again
-				again = JOptionPane.showConfirmDialog(null, "The game was tie!  Click 'ok' to close",
-						"Tie game!", JOptionPane.YES_NO_OPTION);
+				JOptionPane.showMessageDialog(frame, "The game was tie! Click 'ok' to close", "It's a tie!", JOptionPane.PLAIN_MESSAGE);
 				endGame = true;
 			}
 
