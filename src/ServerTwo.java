@@ -17,32 +17,36 @@ public class ServerTwo {
 
 	public static void main(String[] args) throws Exception {
 		// Initialize common variables
-		long delay = 0;
 		int portNumber = 12282;
 		String clientMessage = "";
 		String serverOneMessage = "";
 
-		while (true) {
-			try (ServerSocket serverTwoSocket = new ServerSocket(portNumber);
-					Socket serverOneConnectionSocket = serverTwoSocket.accept();
-					DataOutputStream outToServerOne = new DataOutputStream(serverOneConnectionSocket.getOutputStream());
-					BufferedReader inFromServerOne = new BufferedReader(
-							new InputStreamReader(serverOneConnectionSocket.getInputStream()));)
-			{
+		try (ServerSocket serverTwoSocket = new ServerSocket(portNumber);
+				Socket serverOneConnectionSocket = serverTwoSocket.accept();
+				DataOutputStream outToServerOne = new DataOutputStream(serverOneConnectionSocket.getOutputStream());
+				BufferedReader inFromServerOne = new BufferedReader(
+						new InputStreamReader(serverOneConnectionSocket.getInputStream()));) {
+			while (true) {
+				System.out.println("Received client two connection");
+				try (Socket clientTwoConnectionSocket = serverTwoSocket.accept();
+						DataOutputStream outToClientTwo = new DataOutputStream(
+								clientTwoConnectionSocket.getOutputStream());
+						BufferedReader inFromClientTwo = new BufferedReader(
+								new InputStreamReader(clientTwoConnectionSocket.getInputStream()));) {
 
-				while (true) {
-					Socket clientTwoConnectionSocket = serverTwoSocket.accept();
-					System.out.println("Received client two connection");
-					DataOutputStream outToClientTwo = new DataOutputStream(clientTwoConnectionSocket.getOutputStream());
-					BufferedReader inFromClientTwo = new BufferedReader(
-							new InputStreamReader(clientTwoConnectionSocket.getInputStream()));
-					clientMessage = inFromClientTwo.readLine();
-					System.out.println(clientMessage);
+					while (true) {
+						serverOneMessage = inFromServerOne.readLine();
+						outToClientTwo.writeChars(serverOneMessage);
+						clientMessage = inFromClientTwo.readLine();
+						outToServerOne.writeChars(clientMessage);
+						
+						
+					}
 
 				}
-			} catch (Exception e) {
-				throw new Exception();
 			}
+		} catch (Exception e) {
+			throw new Exception();
 		}
 	}
 }

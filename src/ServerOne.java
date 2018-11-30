@@ -19,8 +19,8 @@ public class ServerOne {
 		// Initialize common variables
 		long delay = 0;
 		int portNumber = 12281;
-		String serverMessage = "";
-		String clientMessage = "";
+		String serverTwoMessage = "";
+		String clientOneMessage = "";
 		String host = "oak.ad.ilstu.edu";
 		try (Socket serverTwoConnectionSocket = new Socket(host, 12282);
 				DataOutputStream outToServerTwo = new DataOutputStream(serverTwoConnectionSocket.getOutputStream());
@@ -37,10 +37,11 @@ public class ServerOne {
 
 					while (true) {
 
-						clientMessage = inFromClientOne.readLine();
-
-						outToClientOne.writeBoolean(true);
-
+						clientOneMessage = inFromClientOne.readLine();
+						outToServerTwo.writeChars(clientOneMessage);
+						serverTwoMessage = inFromServerTwo.readLine();
+						outToClientOne.writeChars(serverTwoMessage);
+						
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
