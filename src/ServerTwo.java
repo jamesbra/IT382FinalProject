@@ -50,7 +50,7 @@ public class ServerTwo {
 
 				}
 				catch (Exception e) {
-					outToServerOne.writeInt(-1);
+					outToServerOne.writeChars("bigwillystyle"+"\n");
 					outToServerOne.flush();
 					continue;
 				}

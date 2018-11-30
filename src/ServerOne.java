@@ -49,7 +49,7 @@ public class ServerOne {
 						
 					}
 				} catch (Exception e) {
-					outToServerTwo.writeInt(-1);
+					outToServerTwo.writeChars("bigwillystyle"+"\n");
 					outToServerTwo.flush();
 					continue;
 				}

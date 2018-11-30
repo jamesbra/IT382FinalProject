@@ -42,11 +42,17 @@ public class ClientTwo {
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		gamePanel(outToServer); // launch game
 		while (true) {
+			if (endGame) {
+				clientSocket.close();
+			}
 			System.out.println("Waiting for server message");
 			serverMessage = inFromServer.readLine();
 			System.out.println("Received server message - " + serverMessage);
 			flag = true;
 			buttons[Integer.parseInt(serverMessage.trim())].doClick();
+			if (endGame) {
+				clientSocket.close();
+			}
 			myTurn = true;
 		}
 
@@ -150,10 +156,12 @@ public class ClientTwo {
 					winner = "User 1";
 				}
 				JOptionPane.showMessageDialog(frame, winner + " wins the game!  Click 'ok' to close", "We have a winner!", JOptionPane.PLAIN_MESSAGE);
+				endGame = true;
 				System.exit(0);
 
 			} else if (xOrO == 9 && win == false) {// tie game, announce and ask if the user want to play again
 				JOptionPane.showMessageDialog(frame, "The game was tie! Click 'ok' to close", "It's a tie!", JOptionPane.PLAIN_MESSAGE);
+				endGame = true;
 				System.exit(0);
 			}
 
