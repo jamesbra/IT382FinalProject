@@ -20,7 +20,8 @@ public class ServerOne {
 		long delay = 0;
 		int portNumber = 12281;
 		String message = "";
-		
+		String host = "oak.ad.ilstu.edu";
+		Socket socketForServerTwo = new Socket(host, portNumber);
 		
 
 		if (args.length > 3) {
