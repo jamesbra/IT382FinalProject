@@ -38,6 +38,9 @@ public class ServerOne {
 						BufferedReader inFromClientOne = new BufferedReader(
 								new InputStreamReader(connectionSocket.getInputStream()));) {
 
+					while(inFromServerTwo.ready()) {
+						inFromServerTwo.readLine();
+					}
 					while (true) {
 						System.out.println("Waiting for client one response");
 						clientOneMessage = inFromClientOne.readLine();

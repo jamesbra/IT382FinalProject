@@ -34,9 +34,12 @@ public class ServerTwo {
 								clientTwoConnectionSocket.getOutputStream());
 						BufferedReader inFromClientTwo = new BufferedReader(
 								new InputStreamReader(clientTwoConnectionSocket.getInputStream()));) {
-
+					while(inFromServerOne.ready()) {
+						inFromServerOne.readLine();
+					}
 					while (true) {
 						System.out.println("Waiting for server one response");
+						
 						serverOneMessage = inFromServerOne.readLine();
 						System.out.println("Received response from server one - " + serverOneMessage);
 						outToClientTwo.writeChars(serverOneMessage + "\n");
