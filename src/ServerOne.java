@@ -23,14 +23,16 @@ public class ServerOne {
 		String serverTwoMessage = "";
 		String clientOneMessage = "";
 		String host = "oak.ad.ilstu.edu";
-		try (Socket serverTwoConnectionSocket = new Socket(host, 12282);
+		
+		try (ServerSocket serverOneSocket = new ServerSocket(portNumber);
+				Socket serverTwoConnectionSocket = new Socket(host, 12282);
 				DataOutputStream outToServerTwo = new DataOutputStream(serverTwoConnectionSocket.getOutputStream());
 				BufferedReader inFromServerTwo = new BufferedReader(
 						new InputStreamReader(serverTwoConnectionSocket.getInputStream()));) {
 			System.out.println("Connected to server two");
 			while (true) {
 				System.out.println("Waiting for client connection");
-				try (ServerSocket serverOneSocket = new ServerSocket(portNumber);
+				try (
 						Socket connectionSocket = serverOneSocket.accept();
 						DataOutputStream outToClientOne = new DataOutputStream(connectionSocket.getOutputStream());
 						BufferedReader inFromClientOne = new BufferedReader(
