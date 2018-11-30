@@ -32,24 +32,10 @@ public class ClientTwo {
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		
 		outToServer.writeChars("Fuck");
-		// Sending 10 pings
 		
-//		for (int i = 0; i < 10; i++) {
-//			Long outTime = System.currentTimeMillis();
-//			String messageToServer = "PING " + i + " " + outTime;
-//			outToServer.writeChars(messageToServer + "\n");
-//			transmitted++;
-//			if (inFromServer.read() == 1) {
-//				Long inTime = System.currentTimeMillis();
-//				Long RTT = inTime - outTime;
-//				System.out.println(messageToServer + " RTT: " + RTT + " ms");
-//				rttData.add(RTT);
-//				received++;
-//			} else {
-//				System.out.println(messageToServer + " RTT: *");
-//				lost++;
-//			}
-//		}
+		
+		
+		
 	}
 
 }

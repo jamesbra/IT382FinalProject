@@ -18,7 +18,7 @@ public class ServerTwo {
 	public static void main(String[] args) throws Exception {
 		// Initialize common variables
 		long delay = 0;
-		int portNumber = 12281;
+		int portNumber = 12282;
 		String clientMessage = "";
 		String serverOneMessage = "";
 
@@ -37,25 +37,6 @@ public class ServerTwo {
 							new InputStreamReader(serverOneConnectionSocket.getInputStream()));
 					clientMessage = inFromClientTwo.readLine();
 					System.out.println(clientMessage);
-					// message = inFromClient.readLine();
-//					if (message == null) {
-//						break;
-//					}
-//								if (random.nextDouble() < LOSS_RATE)
-//								{
-//					outToClient.writeBoolean(false);
-//
-//					System.out.println(message + "  ACTION: not sent");
-//
-////								}
-////								else
-////								{
-//					// delay = (int) (random.nextDouble() * 2* AVERAGE_DELAY);
-//					Thread.sleep(delay);
-//					outToClient.writeBoolean(true);
-//
-//					System.out.println(message + "  ACTION: delayed: " + delay + " ms");
-////								}
 
 				}
 			} catch (Exception e) {
