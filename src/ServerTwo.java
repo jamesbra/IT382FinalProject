@@ -51,7 +51,7 @@ public class ServerTwo {
 
 				}
 				catch (SocketException e) {
-					
+					outToServerOne.flush();
 				}
 			}
 		} catch (Exception e) {

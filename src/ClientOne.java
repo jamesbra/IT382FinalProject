@@ -37,12 +37,6 @@ public class ClientOne {
 //		outToServer.close();
 		gamePanel(outToServer); // launch game
 		while (true) {
-			if (endGame) {
-				clientSocket.close();
-				outToServer.close();
-				inFromServer.close();
-				System.exit(0);
-			}
 			serverMessage = inFromServer.readLine();
 			flag = true;
 
@@ -144,17 +138,17 @@ public class ClientOne {
 				String winner = "";
 				if (letter.trim().equalsIgnoreCase("O")) {
 					winner = "User 2";
-				}
-				else {
+				} else {
 					winner = "User 1";
 				}
-				JOptionPane.showMessageDialog(frame, winner + " wins the game!  Click 'ok' to close", "We have a winner!", JOptionPane.PLAIN_MESSAGE);
-				endGame = true;
-
+				JOptionPane.showMessageDialog(frame, winner + " wins the game!  Click 'ok' to close",
+						"We have a winner!", JOptionPane.PLAIN_MESSAGE);
+				System.exit(0);
 
 			} else if (xOrO == 9 && win == false) {// tie game, announce and ask if the user want to play again
-				JOptionPane.showMessageDialog(frame, "The game was tie! Click 'ok' to close", "It's a tie!", JOptionPane.PLAIN_MESSAGE);
-				endGame = true;
+				JOptionPane.showMessageDialog(frame, "The game was tie! Click 'ok' to close", "It's a tie!",
+						JOptionPane.PLAIN_MESSAGE);
+				System.exit(0);
 			}
 
 //			if (again == JOptionPane.YES_OPTION && win == true) { // if the user want to play again clear all the button

@@ -49,7 +49,7 @@ public class ServerOne {
 						
 					}
 				} catch (SocketException e) {
-					
+					outToServerTwo.flush();
 				}
 			}
 		}
